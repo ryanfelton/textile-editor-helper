@@ -1,5 +1,5 @@
 require File.dirname(__FILE__) + '/abstract_unit'
-require File.dirname(__FILE__) + '/../lib/textile_editor'
+require File.dirname(__FILE__) + '/../lib/textile_editor_helper'
 require 'ostruct'
 
 class TextileEditorHelperTest < Test::Unit::TestCase

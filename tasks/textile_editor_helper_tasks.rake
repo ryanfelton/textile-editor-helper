@@ -1,4 +1,4 @@
-namespace :textile_editor do
+namespace :textile_editor_helper do
   PLUGIN_ROOT = File.dirname(__FILE__) + '/../'
   
   desc 'Installs required javascript files to the public/javascripts directory.'
