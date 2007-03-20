@@ -24,8 +24,8 @@ module TextileEditorHelper
   def textile_editor_initialize
     editor_ids = @textile_editor_ids || []
     output = []
-    output << stylesheet_link_tag('button_styles', 'editor_styles')
-    output << javascript_include_tag('text-tags')
+    output << stylesheet_link_tag('textile-editor')
+    output << javascript_include_tag('textile-editor')
     output << '<script type="text/javascript">'
     output << 'addLoadEvent(initTextileEditors);'
     output << 'function initTextileEditors() {'

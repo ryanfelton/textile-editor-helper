@@ -36,9 +36,8 @@ class TextileEditorHelperTest < Test::Unit::TestCase
   end  
   
   def pre_initialize_output
-    %{<link href="/stylesheets/button_styles.css" media="screen" rel="Stylesheet" type="text/css" />
-      <link href="/stylesheets/editor_styles.css" media="screen" rel="Stylesheet" type="text/css" />
-      <script src="/javascripts/text-tags.js" type="text/javascript"></script>
+    %{<link href="/stylesheets/textile-editor.css" media="screen" rel="Stylesheet" type="text/css" />
+      <script src="/javascripts/textile-editor.js" type="text/javascript"></script>
       <script type="text/javascript">
       addLoadEvent(initTextileEditors);
       function initTextileEditors() \{}
