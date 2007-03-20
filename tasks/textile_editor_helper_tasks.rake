@@ -4,19 +4,27 @@ namespace :textile_editor_helper do
   
   desc 'Installs required assets'
   task :install do
+    verbose = true
     ASSET_FILES.each do |file|
-      path = RAILS_ROOT + '/' + File.dirname(file) + '/'
-      puts path
-      #FileUtils.mkpath(path) unless File.directory?(path)
-      #FileUtils.cp [file], path
+      path = File.dirname(file) + '/'
+      path.gsub!(PLUGIN_ROOT, RAILS_ROOT)
+      path.gsub!('assets', 'public')
+
+      puts " * Copying %-50s to %s" % [file.gsub(PLUGIN_ROOT, ''), path.gsub(RAILS_ROOT, '')] if verbose
+      FileUtils.mkpath(path) unless File.directory?(path)
+      FileUtils.cp [file], path
     end  
   end
-
+  
   desc 'Removes assets for the plugin'
   task :remove do
     ASSET_FILES.each do |file|
-      path = RAILS_ROOT + '/' + File.dirname(file) + '/'
-      FileUtils.rm  
+      path = File.dirname(file) + '/'
+      path.gsub!(PLUGIN_ROOT, RAILS_ROOT)
+      path.gsub!('assets', 'public')
+      path = File.join(path, File.basename(file))
+      puts ' * Removing %s' % path.gsub(RAILS_ROOT, '') if verbose
+      FileUtils.rm [path]
     end
   end
 end
