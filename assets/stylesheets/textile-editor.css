@@ -42,74 +42,74 @@ button.publish {
 */
 
 #ed_strong {
-	background-image: url('toolbar/bold.png');
+	background-image: url(/images/textile-editor/bold.png);
 }
 	
 #ed_emphasis {
-	background-image: url('toolbar/italic.png');
+	background-image: url(/images/textile-editor/italic.png);
 }
 	
 #ed_underline {
-	background-image: url('toolbar/underline.png');
+	background-image: url(/images/textile-editor/underline.png);
 }
 	
 #ed_strike {
-	background-image: url('toolbar/strikethrough.png');
+	background-image: url(/images/textile-editor/strikethrough.png);
 }	
 
 #ed_ul {
-	background-image: url('toolbar/list_bullets.png');
+	background-image: url(/images/textile-editor/list_bullets.png);
 }
 	
 #ed_ol {
-	background-image: url('toolbar/list_numbers.png');
+	background-image: url(/images/textile-editor/list_numbers.png);
 }
 
 #ed_p {
-	background-image: url('toolbar/paragraph.png');
+	background-image: url(/images/textile-editor/paragraph.png);
 }
 
 #ed_h1 {
-	background-image: url('toolbar/h1.png');
+	background-image: url(/images/textile-editor/h1.png);
 }
 
 #ed_h2 {
-	background-image: url('toolbar/h2.png');
+	background-image: url(/images/textile-editor/h2.png);
 }
 
 #ed_h3 {
-	background-image: url('toolbar/h3.png');
+	background-image: url(/images/textile-editor/h3.png);
 }
 
 #ed_h4 {
-	background-image: url('toolbar/h4.png');
+	background-image: url(/images/textile-editor/h4.png);
 }
 
 
 #ed_indent {
-	background-image: url('toolbar/indent.png');
+	background-image: url(/images/textile-editor/indent.png);
 }
 
 #ed_outdent {
-	background-image: url('toolbar/outdent.png');
+	background-image: url(/images/textile-editor/outdent.png);
 }
 
 #ed_justifyl {
-	background-image: url('toolbar/left.png');
+	background-image: url(/images/textile-editor/left.png);
 }
 
 #ed_justifyc {
-	background-image: url('toolbar/center.png');
+	background-image: url(/images/textile-editor/center.png);
 }
 	
 #ed_justifyr {
-	background-image: url('toolbar/right.png');
+	background-image: url(/images/textile-editor/right.png);
 }
 	
 #ed_justify {
-	background-image: url('toolbar/justify.png');
+	background-image: url(/images/textile-editor/justify.png);
 }
 	
 #ed_block {
-	background-image: url('toolbar/blockquote.png');
+	background-image: url(/images/textile-editor/blockquote.png);
 }
