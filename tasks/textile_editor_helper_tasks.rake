@@ -1,15 +1,22 @@
 namespace :textile_editor_helper do
-  PLUGIN_ROOT = File.dirname(__FILE__) + '/../'
+  PLUGIN_ROOT = File.dirname(__FILE__) + '/..'
+  ASSET_FILES = Dir[PLUGIN_ROOT + '/assets/**/*'].select { |e| File.file?(e) }
   
-  desc 'Installs required javascript files to the public/javascripts directory.'
+  desc 'Installs required assets'
   task :install do
-    %w{javascripts stylesheets images}.each do |dir|
-      FileUtils.cp Dir[PLUGIN_ROOT + "/assets/#{dir}/*.*"], RAILS_ROOT + "/public/#{dir}"
-    end
+    ASSET_FILES.each do |file|
+      path = RAILS_ROOT + '/' + File.dirname(file) + '/'
+      puts path
+      #FileUtils.mkpath(path) unless File.directory?(path)
+      #FileUtils.cp [file], path
+    end  
   end
 
-  # desc 'Removes the javascripts for the plugin.'
-  # task :remove do
-  #   FileUtils.rm %{lowpro.js}.collect { |f| RAILS_ROOT + "/public/javascripts/" + f  }
-  # end
+  desc 'Removes assets for the plugin'
+  task :remove do
+    ASSET_FILES.each do |file|
+      path = RAILS_ROOT + '/' + File.dirname(file) + '/'
+      FileUtils.rm  
+    end
+  end
 end
