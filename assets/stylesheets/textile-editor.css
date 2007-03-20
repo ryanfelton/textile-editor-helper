@@ -1,0 +1,115 @@
+button {
+  width: 18px;
+	height: 18px;
+	margin-right: 2px;
+	background-color: #f0f0ee;
+	background-repeat: no-repeat;
+	
+	border: 1px solid #f0f0ee;
+	padding: 0px;
+}
+
+button:hover, button.unselected:hover {
+	border: 1px solid #000;
+}
+
+button.selected {
+	border: 1px solid #ce9100;
+	background-color: #ffffff;
+}
+
+button.unselected {
+	border: 1px solid #f0f0ee;
+	background-color: #f0f0ee;
+}
+
+button.publish {
+	padding:5px;
+	display:block;
+}
+
+/*textarea.canvases {
+	height:300px;
+	width: 400px;
+}
+*/
+/*#toolbar {
+	width: 400px;
+	background-color: #f0f0ee;
+	padding: 3px;
+	margin-bottom: 4px;
+}
+*/
+
+#ed_strong {
+	background-image: url('toolbar/bold.png');
+}
+	
+#ed_emphasis {
+	background-image: url('toolbar/italic.png');
+}
+	
+#ed_underline {
+	background-image: url('toolbar/underline.png');
+}
+	
+#ed_strike {
+	background-image: url('toolbar/strikethrough.png');
+}	
+
+#ed_ul {
+	background-image: url('toolbar/list_bullets.png');
+}
+	
+#ed_ol {
+	background-image: url('toolbar/list_numbers.png');
+}
+
+#ed_p {
+	background-image: url('toolbar/paragraph.png');
+}
+
+#ed_h1 {
+	background-image: url('toolbar/h1.png');
+}
+
+#ed_h2 {
+	background-image: url('toolbar/h2.png');
+}
+
+#ed_h3 {
+	background-image: url('toolbar/h3.png');
+}
+
+#ed_h4 {
+	background-image: url('toolbar/h4.png');
+}
+
+
+#ed_indent {
+	background-image: url('toolbar/indent.png');
+}
+
+#ed_outdent {
+	background-image: url('toolbar/outdent.png');
+}
+
+#ed_justifyl {
+	background-image: url('toolbar/left.png');
+}
+
+#ed_justifyc {
+	background-image: url('toolbar/center.png');
+}
+	
+#ed_justifyr {
+	background-image: url('toolbar/right.png');
+}
+	
+#ed_justify {
+	background-image: url('toolbar/justify.png');
+}
+	
+#ed_block {
+	background-image: url('toolbar/blockquote.png');
+}
