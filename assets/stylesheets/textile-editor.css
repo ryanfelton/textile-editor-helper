@@ -1,6 +1,6 @@
 button {
-  width: 18px;
-	height: 18px;
+  width: 24px;
+	height: 24px;
 	margin-right: 2px;
 	background-color: #f0f0ee;
 	background-repeat: no-repeat;
@@ -10,7 +10,7 @@ button {
 }
 
 button:hover, button.unselected:hover {
-	border: 1px solid #000;
+	border: 1px solid #999;
 }
 
 button.selected {
@@ -33,83 +33,28 @@ button.publish {
 	width: 400px;
 }
 */
-/*#toolbar {
-	width: 400px;
+
+div.textile-toolbar {
 	background-color: #f0f0ee;
 	padding: 3px;
 	margin-bottom: 4px;
 }
-*/
 
-#ed_strong {
-	background-image: url(/images/textile-editor/bold.png);
-}
-	
-#ed_emphasis {
-	background-image: url(/images/textile-editor/italic.png);
-}
-	
-#ed_underline {
-	background-image: url(/images/textile-editor/underline.png);
-}
-	
-#ed_strike {
-	background-image: url(/images/textile-editor/strikethrough.png);
-}	
-
-#ed_ul {
-	background-image: url(/images/textile-editor/list_bullets.png);
-}
-	
-#ed_ol {
-	background-image: url(/images/textile-editor/list_numbers.png);
-}
-
-#ed_p {
-	background-image: url(/images/textile-editor/paragraph.png);
-}
-
-#ed_h1 {
-	background-image: url(/images/textile-editor/h1.png);
-}
-
-#ed_h2 {
-	background-image: url(/images/textile-editor/h2.png);
-}
-
-#ed_h3 {
-	background-image: url(/images/textile-editor/h3.png);
-}
-
-#ed_h4 {
-	background-image: url(/images/textile-editor/h4.png);
-}
-
-
-#ed_indent {
-	background-image: url(/images/textile-editor/indent.png);
-}
-
-#ed_outdent {
-	background-image: url(/images/textile-editor/outdent.png);
-}
-
-#ed_justifyl {
-	background-image: url(/images/textile-editor/left.png);
-}
-
-#ed_justifyc {
-	background-image: url(/images/textile-editor/center.png);
-}
-	
-#ed_justifyr {
-	background-image: url(/images/textile-editor/right.png);
-}
-	
-#ed_justify {
-	background-image: url(/images/textile-editor/justify.png);
-}
-	
-#ed_block {
-	background-image: url(/images/textile-editor/blockquote.png);
-}
+#ed_strong    { background: url(/images/textile-editor/bold.png) no-repeat center center; }
+#ed_emphasis  {	background: url(/images/textile-editor/italic.png) no-repeat center center; }
+#ed_underline {	background: url(/images/textile-editor/underline.png) no-repeat center center; }
+#ed_strike    {	background: url(/images/textile-editor/strikethrough.png) no-repeat center center; }
+#ed_ul        {	background: url(/images/textile-editor/list_bullets.png) no-repeat center center; }
+#ed_ol        {	background: url(/images/textile-editor/list_numbers.png) no-repeat center center; }
+#ed_p         {	background: url(/images/textile-editor/paragraph.png) no-repeat center center; }
+#ed_h1        { background: url(/images/textile-editor/h1.png) no-repeat center center; }
+#ed_h2        {	background: url(/images/textile-editor/h2.png) no-repeat center center; }
+#ed_h3        {	background: url(/images/textile-editor/h3.png) no-repeat center center; }
+#ed_h4        { background: url(/images/textile-editor/h4.png) no-repeat center center; }
+#ed_indent    { background: url(/images/textile-editor/indent.png) no-repeat center center; }
+#ed_outdent   {	background: url(/images/textile-editor/outdent.png) no-repeat center center; }
+#ed_justifyl  {	background: url(/images/textile-editor/left.png) no-repeat center center; }
+#ed_justifyc  {	background: url(/images/textile-editor/center.png) no-repeat center center; }
+#ed_justifyr  {	background: url(/images/textile-editor/right.png) no-repeat center center; }
+#ed_justify   { background: url(/images/textile-editor/justify.png) no-repeat center center; }
+#ed_block     { background: url(/images/textile-editor/blockquote.png) no-repeat center center; }

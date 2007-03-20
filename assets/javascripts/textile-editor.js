@@ -34,23 +34,22 @@ more on textile:
 
 */
 
-document.write('<script src="textile-editor-config.js" type="text/javascript"></script>');
+document.write('<script src="/javascripts/textile-editor-config.js" type="text/javascript"></script>');
 
-// initiliaze the quicktags													
-function initQuicktags(canvasi) {
-	for (var i = 0; i < canvasi.length; i++) {
-		edToolbar(document.getElementById(canvasi[i]),canvasi[i]);
-	}
-}
+// // initiliaze the quicktags													
+// function initQuicktags(canvasi) {
+// 	for (var i = 0; i < canvasi.length; i++) {
+// 		edToolbar(document.getElementById(canvasi[i]),canvasi[i]);
+// 	}
+// }
 
 // draw the toolbar
-function edToolbar(canvas,canvas_name) {
-	var view = '';
-	if (canvas_name.match(/^s\_/)) {
-		view = 's';
-	}
+function edToolbar(canvas, view) {
 	var toolbar = document.createElement("div");
-	toolbar.id = "toolbar";
+	toolbar.id = "textile-toolbar-" + canvas;
+	toolbar.className = 'textile-toolbar';
+	canvas = document.getElementById(canvas);
+	
 	canvas.parentNode.insertBefore(toolbar, canvas);
 	// Create the local Button array by assigning theButtons array to edButtons
 	var edButtons = new Array();
