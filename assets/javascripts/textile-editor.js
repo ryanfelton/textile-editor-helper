@@ -261,10 +261,10 @@ function edInsertTag(myField, button) {
 				finalText = beginningText
 							  + newlineStart
 				              + button.tagStart
-							  + selectedText.replace(newlineReplaceRegexClean,newlineReplaceClean + button.tagStart).replace(/\n(\w)/g,'\n' + button.tagStart + '$1')
+							  + selectedText.replace(newlineReplaceRegexClean,newlineReplaceClean + button.tagStart).replace(/\n(\S)/g,'\n' + button.tagStart + '$1')
 							  + newlineEnd
 							  + followupText;
-				if (matches = selectedText.match(/\n(\w)/g)) {
+				if (matches = selectedText.match(/\n(\S)/g)) {
 					listItems = matches.length;
 				}
 				posDiffPos = 3 + listItems*3;
