@@ -27,13 +27,14 @@ module TextileEditorHelper
     output << stylesheet_link_tag('textile-editor')
     output << javascript_include_tag('textile-editor')
     output << '<script type="text/javascript">'
-    output << %{Event.observe(window, 'load', function() \{}
+    output << %{Event.observe(window, 'load', initTextileEditors()) }
     #output << 'addLoadEvent(initTextileEditors);'
-    #output << 'function initTextileEditors() {'
+    output << 'function initTextileEditors() {'
     editor_ids.each do |editor_id, mode|
       output << "edToolbar('%s', '%s');" % [editor_id, mode]
     end
-    output << '});'
+    output << '};'
+
     output << '</script>'
     output.join("\n")
   end
