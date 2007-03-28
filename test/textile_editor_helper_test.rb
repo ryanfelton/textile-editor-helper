@@ -39,12 +39,11 @@ class TextileEditorHelperTest < Test::Unit::TestCase
     %{<link href="/stylesheets/textile-editor.css" media="screen" rel="Stylesheet" type="text/css" />
       <script src="/javascripts/textile-editor.js" type="text/javascript"></script>
       <script type="text/javascript">
-      Event.observe(window, 'load', initTextileEditors())
-      function initTextileEditors() \{}
+      Event.observe(window, 'load', function() \{}
   end
   
   def post_initialize_output
-    %{\};
+    %{\});
       </script>
     }
   end
@@ -127,6 +126,7 @@ class TextileEditorHelperTest < Test::Unit::TestCase
       :recipe => [ :instructions, :introduction ], 
       :story  => :title 
     }]
-    assert_equal %w(article_page recipe_instructions recipe_introduction story_title), textile_extract_dom_ids(*paramd)
+    assert_equal %w(article_page recipe_instructions recipe_introduction story_title).sort, 
+      textile_extract_dom_ids(*paramd).sort { |a,b| a.to_s <=> b.to_s }
   end
 end
