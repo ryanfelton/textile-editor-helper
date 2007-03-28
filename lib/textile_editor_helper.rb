@@ -15,27 +15,34 @@ module TextileEditorHelper
   #    <link href="/stylesheets/editor_styles.css" media="screen" rel="Stylesheet" type="text/css" />
   #    <script src="/javascripts/text-tags.js" type="text/javascript"></script>
   #    <script type="text/javascript">
-  #    addLoadEvent(initTextileEditors);
+  #    Event.observe(window, 'load', initTextileEditors())
   #    function initTextileEditors() {
   #    edToolbar('article_body', 'extended');
   #    edToolbar('article_body_excerpt', 'simple');
   #    }
   #    </script>  
-  def textile_editor_initialize
-    editor_ids = @textile_editor_ids || []
+  def textile_editor_initialize(*dom_ids)
+    editor_ids = (@textile_editor_ids || []) + textile_extract_dom_ids(*dom_ids)
     output = []
     output << stylesheet_link_tag('textile-editor')
     output << javascript_include_tag('textile-editor')
     output << '<script type="text/javascript">'
-    output << %{Event.observe(window, 'load', initTextileEditors()) }
-    #output << 'addLoadEvent(initTextileEditors);'
+    output << %{Event.observe(window, 'load', initTextileEditors())}
     output << 'function initTextileEditors() {'
     editor_ids.each do |editor_id, mode|
-      output << "edToolbar('%s', '%s');" % [editor_id, mode]
+      output << "edToolbar('%s', '%s');" % [editor_id, mode || 'extended']
     end
     output << '};'
 
     output << '</script>'
     output.join("\n")
+  end
+
+  def textile_extract_dom_ids(*dom_ids)
+    hash = dom_ids.last.is_a?(Hash) ? dom_ids.pop : {}
+
+    hash.inject(dom_ids) do |ids, (object, fields)|
+      ids + Array(fields).map { |field| "%s_%s" % [object, field] }
+    end
   end
 end

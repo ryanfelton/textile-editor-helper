@@ -39,12 +39,12 @@ class TextileEditorHelperTest < Test::Unit::TestCase
     %{<link href="/stylesheets/textile-editor.css" media="screen" rel="Stylesheet" type="text/css" />
       <script src="/javascripts/textile-editor.js" type="text/javascript"></script>
       <script type="text/javascript">
-      addLoadEvent(initTextileEditors);
+      Event.observe(window, 'load', initTextileEditors())
       function initTextileEditors() \{}
   end
   
   def post_initialize_output
-    %{\}
+    %{\};
       </script>
     }
   end
@@ -96,5 +96,37 @@ class TextileEditorHelperTest < Test::Unit::TestCase
       ['article_body', 'extended'],
       ['article_body_excerpt', 'simple']
     ]), output
+  end
+
+  def test_textile_editor_inititalize_with_arbitrary_ids
+    output = textile_editor_initialize(:story_comment, :story_body)
+    assert_equal expected_initialize_output([
+      ['story_comment', 'extended'],
+      ['story_body', 'extended']
+    ]), output
+  end
+
+  def test_textile_extract_dom_ids_works_with_arrayed_hash
+    hash_with_array = { :recipe => [ :instructions, :introduction ] }
+    assert_equal [ 'recipe_instructions', 'recipe_introduction' ], textile_extract_dom_ids(hash_with_array)
+  end
+
+  def test_textile_extract_dom_ids_works_with_hash
+    hash_with_symbol = { :story  => :title }
+    assert_equal [ 'story_title' ], textile_extract_dom_ids(hash_with_symbol)
+  end
+
+  def test_textile_extract_dom_ids_works_with_ids
+    straight_id = 'article_page'
+    assert_equal [ 'article_page' ], textile_extract_dom_ids(straight_id)
+  end
+
+  def test_textile_extract_dom_ids_works_with_mixed_params
+    paramd  = %w(article_page)
+    paramd += [{ 
+      :recipe => [ :instructions, :introduction ], 
+      :story  => :title 
+    }]
+    assert_equal %w(article_page recipe_instructions recipe_introduction story_title), textile_extract_dom_ids(*paramd)
   end
 end
