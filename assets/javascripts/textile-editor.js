@@ -583,6 +583,7 @@ function edInsertTag(myField, button) {
 	// set the appropriate DOM value with the final text
 	if (FF == true) {
 		myField.value = finalText;
+		myField.scrollTop = scrollTop;
 	}
 	else {
 		sel.text = finalText;
@@ -598,5 +599,4 @@ function edInsertTag(myField, button) {
 		myField.selectionStart = cursorPos;
 		myField.selectionEnd = cursorPos;
 	}
-	//myField.scrollTop = scrollTop;
 }
