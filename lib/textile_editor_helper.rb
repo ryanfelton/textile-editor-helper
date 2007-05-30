@@ -22,18 +22,45 @@ module TextileEditorHelper
   #    </script>  
   def textile_editor_initialize(*dom_ids)
     editor_ids = (@textile_editor_ids || []) + textile_extract_dom_ids(*dom_ids)
+    editor_buttons = (@textile_editor_buttons || [])
     output = []
     output << stylesheet_link_tag('textile-editor')
     output << javascript_include_tag('textile-editor')
     output << '<script type="text/javascript">'
     output << %{Event.observe(window, 'load', function() \{}
+    output << editor_buttons.join("\n") if editor_buttons.any?;
     editor_ids.each do |editor_id, mode|
       output << "edToolbar('%s', '%s');" % [editor_id, mode || 'extended']
     end
     output << '});'
     output << '</script>'
     output.join("\n")
+  end
+
+  def textile_editor_button(text, options={})
+    if text == :separator
+      return textile_editor_button_separator  
+    end
+      
+    onclick = options[:onclick]
+    onclick += ';' unless onclick =~ /;$/
+    onclick = 'function() { ' + onclick + ' return false; }'
     
+    button = "theButtons.push(new edButtonCustom('%s', '%s', %s, \"%s\", '%s'));"
+    button = button % [
+      options[:id],
+      text,
+      onclick,
+      options[:title],
+      options[:simple] ? 's' : ''
+    ]
+    
+    (@textile_editor_buttons ||= []) << button
+  end
+  
+  def textile_editor_button_separator(options={})
+    button = "theButtons.push(new edButtonSeparator('%s'));" % (options[:simple] || '')
+    (@textile_editor_buttons ||= []) << button
   end
 
   def textile_extract_dom_ids(*dom_ids)

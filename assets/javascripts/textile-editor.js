@@ -69,16 +69,32 @@ function edToolbar(canvas, view) {
 
 // draw individual buttons
 function edShowButton(button, edCanvas) {
+	if (button.separator) {
+		var theButton = document.createElement('span');
+		theButton.className = 'ed_sep';
+		return theButton;
+	}
+	
 	var theButton = document.createElement("button");
 	theButton.id = button.id;
 	theButton.className = 'ed_button';
 	theButton.className += 'selected';
-	theButton.tagStart = button.tagStart;
-	theButton.tagEnd = button.tagEnd;
+	
+	if (!button.custom) {
+	  theButton.tagStart = button.tagStart;
+	  theButton.tagEnd = button.tagEnd;
+  	theButton.open = button.open;
+  	theButton.onclick = function() { edInsertTag(edCanvas,this); return false; } 
+	  var img = document.createElement('img');
+	  img.src = '/images/textile-editor/' + button.display;
+	  theButton.appendChild(img);
+  } else {
+	  theButton.onclick = button.onclick;
+    theButton.innerHTML = button.display;
+	} // end if !custom
+	
 	theButton.accessKey = button.access;
 	theButton.title = button.title;
-	theButton.open = button.open;
-	theButton.onclick = function() { edInsertTag(edCanvas,this); return false; } 
 	return theButton;	
 }
 

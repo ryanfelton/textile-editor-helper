@@ -48,8 +48,9 @@ class TextileEditorHelperTest < Test::Unit::TestCase
     }
   end
   
-  def expected_initialize_output(editors)
+  def expected_initialize_output(editors, button_data=nil)
     expected = [pre_initialize_output]
+    expected << button_data unless button_data.nil?
     expected << editors.map do |editor|
       "edToolbar('%s', '%s');" % editor
     end
@@ -96,13 +97,28 @@ class TextileEditorHelperTest < Test::Unit::TestCase
       ['article_body_excerpt', 'simple']
     ]), output
   end
-
+  
   def test_textile_editor_inititalize_with_arbitrary_ids
     output = textile_editor_initialize(:story_comment, :story_body)
     assert_equal expected_initialize_output([
       ['story_comment', 'extended'],
       ['story_body', 'extended']
     ]), output
+  end
+
+  def test_textile_editor_initialize_with_custom_buttons
+    button_data = ["theButtons.push(new edButtonCustom('test_button', 'Hello', function() { alert(\"Hello!\"); return false; }, \"Hello world\", ''));"]
+    actual = textile_editor_button('Hello', 
+      :id => 'test_button',
+      :onclick => 'alert("Hello!")', 
+      :title => 'Hello world'
+    )    
+
+    create_extended_editor('article', 'body')
+    output = textile_editor_initialize()
+    assert_equal expected_initialize_output([
+      ['article_body', 'extended']
+    ], button_data.join("\n")), output
   end
 
   def test_textile_extract_dom_ids_works_with_arrayed_hash
@@ -128,5 +144,28 @@ class TextileEditorHelperTest < Test::Unit::TestCase
     }]
     assert_equal %w(article_page recipe_instructions recipe_introduction story_title).sort, 
       textile_extract_dom_ids(*paramd).sort { |a,b| a.to_s <=> b.to_s }
+  end
+  
+  def test_textile_editor_button
+    expected = ["theButtons.push(new edButtonCustom('test_button', 'Hello', function() { alert(\"Hello!\"); return false; }, \"Hello world\", ''));"]
+    actual = textile_editor_button('Hello', 
+      :id => 'test_button',
+      :onclick => 'alert("Hello!")', 
+      :title => 'Hello world'
+    )
+    
+    assert_equal expected, actual
+  end  
+  
+  def test_textile_editor_button_simple
+    expected = ["theButtons.push(new edButtonCustom('test_button', 'Hello', function() { alert(\"Hello!\"); return false; }, \"Hello world\", 's'));"]
+    actual = textile_editor_button('Hello', 
+      :id => 'test_button',
+      :onclick => 'alert("Hello!")', 
+      :title => 'Hello world',
+      :simple => true
+    )
+    
+    assert_equal expected, actual
   end
 end
