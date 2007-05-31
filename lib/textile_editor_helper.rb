@@ -16,8 +16,8 @@ module TextileEditorHelper
   #    <script src="/javascripts/text-tags.js" type="text/javascript"></script>
   #    <script type="text/javascript">
   #    Event.observe(window, 'load', function() {
-  #    edToolbar('article_body', 'extended');
-  #    edToolbar('article_body_excerpt', 'simple');
+  #    TextileEditor.initialize('article_body', 'extended');
+  #    TextileEditor.initialize('article_body_excerpt', 'simple');
   #    });
   #    </script>  
   def textile_editor_initialize(*dom_ids)
@@ -30,42 +30,39 @@ module TextileEditorHelper
     output << %{Event.observe(window, 'load', function() \{}
     output << editor_buttons.join("\n") if editor_buttons.any?;
     editor_ids.each do |editor_id, mode|
-      output << "edToolbar('%s', '%s');" % [editor_id, mode || 'extended']
+      output << "TextileEditor.initialize('%s', '%s');" % [editor_id, mode || 'extended']
     end
     output << '});'
     output << '</script>'
     output.join("\n")
   end
 
+  # registers a new button for the Textile Editor toolbar
+  # Parameters:
+  #   * +text+: text to display (contents of button tag, so HTML is valid as well)
+  #   * +options+: options Hash as supported by +content_tag+ helper in Rails
+  # 
+  # Example:
+  #   The following example adds a button labeled 'Greeting' which triggers an
+  #   alert:
+  # 
+  #   <% textile_editor_button 'Greeting', :onclick => "alert('Hello!')" %> 
+  #
+  # *Note*: this method must be called before +textile_editor_initialize+
   def textile_editor_button(text, options={})
-    if text == :separator
-      return textile_editor_button_separator  
-    end
-      
-    onclick = options[:onclick]
-    onclick += ';' unless onclick =~ /;$/
-    onclick = 'function() { ' + onclick + ' return false; }'
-    
-    button = "theButtons.push(new edButtonCustom('%s', '%s', %s, \"%s\", '%s'));"
-    button = button % [
-      options[:id],
-      text,
-      onclick,
-      options[:title],
-      options[:simple] ? 's' : ''
-    ]
-    
+    return textile_editor_button_separator  if text == :separator
+    button = content_tag(:button, text, options)
+    button = "TextileEditor.buttons.push(\"%s\");" % escape_javascript(button)
     (@textile_editor_buttons ||= []) << button
   end
   
   def textile_editor_button_separator(options={})
-    button = "theButtons.push(new edButtonSeparator('%s'));" % (options[:simple] || '')
+    button = "TextileEditor.buttons.push(new TextileEditorButtonSeparator('%s'));" % (options[:simple] || '')
     (@textile_editor_buttons ||= []) << button
   end
 
   def textile_extract_dom_ids(*dom_ids)
     hash = dom_ids.last.is_a?(Hash) ? dom_ids.pop : {}
-
     hash.inject(dom_ids) do |ids, (object, fields)|
       ids + Array(fields).map { |field| "%s_%s" % [object, field] }
     end

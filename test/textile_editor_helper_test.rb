@@ -7,6 +7,7 @@ class TextileEditorHelperTest < Test::Unit::TestCase
   include ActionView::Helpers::AssetTagHelper
   include ActionView::Helpers::TagHelper
   include ActionView::Helpers::FormHelper
+  include ActionView::Helpers::JavascriptHelper
   include TextileEditorHelper
     
   def setup
@@ -52,7 +53,7 @@ class TextileEditorHelperTest < Test::Unit::TestCase
     expected = [pre_initialize_output]
     expected << button_data unless button_data.nil?
     expected << editors.map do |editor|
-      "edToolbar('%s', '%s');" % editor
+      "TextileEditor.initialize('%s', '%s');" % editor
     end
     expected << post_initialize_output
     expected.join("\n").split("\n").map { |e| e.lstrip }.join("\n").chomp
@@ -107,18 +108,21 @@ class TextileEditorHelperTest < Test::Unit::TestCase
   end
 
   def test_textile_editor_initialize_with_custom_buttons
-    button_data = ["theButtons.push(new edButtonCustom('test_button', 'Hello', function() { alert(\"Hello!\"); return false; }, \"Hello world\", ''));"]
-    actual = textile_editor_button('Hello', 
+    b = '<button id="test_button" onclick="alert(\'Hello!\')" title="Hello world">Hello</button>'
+    button_data = ["TextileEditor.buttons.push(\"%s\");" % escape_javascript(b)]
+    actual = textile_editor_button('Hello',
       :id => 'test_button',
-      :onclick => 'alert("Hello!")', 
+      :onclick => "alert('Hello!')", 
       :title => 'Hello world'
-    )    
-
+    )   
+    
+    assert_equal button_data, actual
+     
     create_extended_editor('article', 'body')
     output = textile_editor_initialize()
     assert_equal expected_initialize_output([
       ['article_body', 'extended']
-    ], button_data.join("\n")), output
+    ], button_data), output
   end
 
   def test_textile_extract_dom_ids_works_with_arrayed_hash
@@ -147,25 +151,15 @@ class TextileEditorHelperTest < Test::Unit::TestCase
   end
   
   def test_textile_editor_button
-    expected = ["theButtons.push(new edButtonCustom('test_button', 'Hello', function() { alert(\"Hello!\"); return false; }, \"Hello world\", ''));"]
+    b = '<button id="test_button" onclick="alert(\'Hello!\')" title="Hello world">Hello</button>'
+    expected = ['TextileEditor.buttons.push("%s");' % escape_javascript(b)]
+    
     actual = textile_editor_button('Hello', 
       :id => 'test_button',
-      :onclick => 'alert("Hello!")', 
+      :onclick => "alert('Hello!')", 
       :title => 'Hello world'
     )
     
     assert_equal expected, actual
   end  
-  
-  def test_textile_editor_button_simple
-    expected = ["theButtons.push(new edButtonCustom('test_button', 'Hello', function() { alert(\"Hello!\"); return false; }, \"Hello world\", 's'));"]
-    actual = textile_editor_button('Hello', 
-      :id => 'test_button',
-      :onclick => 'alert("Hello!")', 
-      :title => 'Hello world',
-      :simple => true
-    )
-    
-    assert_equal expected, actual
-  end
 end
