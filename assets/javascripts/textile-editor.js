@@ -97,6 +97,7 @@ TextileEditor.Methods = {
 			button.tagStart = button.getAttribute('tagStart');
 			button.tagEnd = button.getAttribute('tagEnd');
 			button.open = button.getAttribute('open');
+			button.textile_editor = te;
 		});
 	}, // end initialize
 	
@@ -133,8 +134,9 @@ TextileEditor.Methods = {
 	addTag: function(button) {
 		if (button.tagEnd != '') {
 			this.openTags[this.openTags.length] = button;
-			var el = document.getElementById(button.id);
-			el.className = 'selected';
+			//var el = document.getElementById(button.id);
+			//el.className = 'selected';
+			button.className = 'selected';
 		}
 	}, // end addTag
 
@@ -144,8 +146,9 @@ TextileEditor.Methods = {
 		for (i = 0; i < this.openTags.length; i++) {
 			if (this.openTags[i] == button) {
 				this.openTags.splice(button, 1);
-				var el = document.getElementById(button.id);
-				el.className = 'unselected';
+				//var el = document.getElementById(button.id);
+				//el.className = 'unselected';
+				button.className = 'unselected';
 			}
 		}
 	}, // end removeTag
@@ -169,9 +172,14 @@ TextileEditor.Methods = {
 
 	// insert the tag. this is the bulk of the code.
 	// (edInsertTag)
-  insertTag: function(button) {
+  insertTag: function(button, tagStart, tagEnd) {
 	  var myField = this.canvas;
 		myField.focus();
+
+    if (tagStart) {
+	    button.tagStart = tagStart;
+      button.tagEnd = tagEnd ? tagEnd : '\n';
+    }
 
 		var textSelected = false;
 		var finalText = '';
@@ -322,7 +330,7 @@ TextileEditor.Methods = {
 			}
 
 			// now lets look and see if the user is trying to muck with a block or block modifier
-			else if (button.tagStart.match(/^(h1|h2|h3|h4|bq|p|\>|\<\>|\<|\=|\(|\))/g)) {
+			else if (button.tagStart.match(/^(h1|h2|h3|h4|h5|h6|bq|p|\>|\<\>|\<|\=|\(|\))/g)) {
 
 				var insertTag = '';
 				var insertModifier = '';
@@ -338,7 +346,7 @@ TextileEditor.Methods = {
 
 				var re_list_items = new RegExp('(\\*+|\\#+)','g'); // need this regex later on when checking indentation of lists
 
-				var re_block_modifier = new RegExp('^(h1|h2|h3|h4|bq|p| [\\*]{1,} | [\\#]{1,} |)(\\>|\\<\\>|\\<|\\=|[\\(]{1,}|[\\)]{1,6}|)','g');
+				var re_block_modifier = new RegExp('^(h1|h2|h3|h4|h5|h6|bq|p| [\\*]{1,} | [\\#]{1,} |)(\\>|\\<\\>|\\<|\\=|[\\(]{1,}|[\\)]{1,6}|)','g');
 				if (tagPartMatches = re_block_modifier.exec(selectedText)) {
 					tagPartBlock = tagPartMatches[1];
 					tagPartModifier = tagPartMatches[2];
@@ -424,7 +432,7 @@ TextileEditor.Methods = {
 				else {
 
 					// if this is a block modification/addition
-					if (button.tagStart.match(/(h1|h2|h3|h4|bq|p)/g)) { 
+					if (button.tagStart.match(/(h1|h2|h3|h4|h5|h6|bq|p)/g)) { 
 						if (tagPartBlock == '') {
 							drawSwitch = 2;
 						}
@@ -589,7 +597,7 @@ TextileEditor.Methods = {
 			var buttonStart = '';
 			var buttonEnd = '';
 			var re_p = new RegExp('(\\<|\\>|\\=|\\<\\>|\\(|\\))','g');
-			var re_h = new RegExp('^(h1|h2|h3|h4|p|bq)','g');
+			var re_h = new RegExp('^(h1|h2|h3|h4|h5|h6|p|bq)','g');
 			if (!this.checkOpenTags(button) || button.tagEnd == '') { // opening tag
 
 			 	if (button.tagStart.match(re_h)) {
