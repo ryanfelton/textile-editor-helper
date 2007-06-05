@@ -98,6 +98,7 @@ TextileEditor.Methods = {
 			button.tagEnd = button.getAttribute('tagEnd');
 			button.open = button.getAttribute('open');
 			button.textile_editor = te;
+			button.canvas = te.canvas;
 		});
 	}, // end initialize
 	
@@ -173,7 +174,7 @@ TextileEditor.Methods = {
 	// insert the tag. this is the bulk of the code.
 	// (edInsertTag)
   insertTag: function(button, tagStart, tagEnd) {
-	  var myField = this.canvas;
+	  var myField = button.canvas;
 		myField.focus();
 
     if (tagStart) {
