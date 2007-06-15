@@ -26,6 +26,10 @@ class TextileEditorHelperTest < Test::Unit::TestCase
   end
   
   # support methods
+  def request
+    @controller.request
+  end
+  
   def create_simple_editor(object, field, options={})
     output = textile_editor(object, field, options.merge(:simple => true))
     assert_equal  text_area(object, field, options), output

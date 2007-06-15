@@ -8,31 +8,45 @@ module TextileEditorHelper
     text_area(object, field, options)
   end
   
+  def textile_editor_support
+    output = []
+    output << stylesheet_link_tag('textile-editor') 
+    output << javascript_include_tag('textile-editor')
+    output.join("\n")
+  end
+  
   # adds the necessary javascript include tags, stylesheet tags,
   # and load event with necessary javascript to active textile editor(s)
   # sample output:
-  #    <link href="/stylesheets/button_styles.css" media="screen" rel="Stylesheet" type="text/css" />
-  #    <link href="/stylesheets/editor_styles.css" media="screen" rel="Stylesheet" type="text/css" />
-  #    <script src="/javascripts/text-tags.js" type="text/javascript"></script>
+  #    <link href="/stylesheets/textile-editor.css" media="screen" rel="Stylesheet" type="text/css" />
+  #    <script src="/javascripts/textile-editor.js" type="text/javascript"></script>
   #    <script type="text/javascript">
   #    Event.observe(window, 'load', function() {
   #    TextileEditor.initialize('article_body', 'extended');
   #    TextileEditor.initialize('article_body_excerpt', 'simple');
   #    });
   #    </script>  
+  # 
+  # Note: in the case of this helper being called via AJAX, the output will be reduced:
+  #    <script type="text/javascript">
+  #    TextileEditor.initialize('article_body', 'extended');
+  #    TextileEditor.initialize('article_body_excerpt', 'simple');
+  #    </script>  
+  # 
+  # This means that the support files must be loaded outside of the AJAX request, either
+  # via a call to this helper or the textile_editor_support() helper
   def textile_editor_initialize(*dom_ids)
     editor_ids = (@textile_editor_ids || []) + textile_extract_dom_ids(*dom_ids)
     editor_buttons = (@textile_editor_buttons || [])
     output = []
-    output << stylesheet_link_tag('textile-editor')
-    output << javascript_include_tag('textile-editor')
+    output << textile_editor_support unless request.xhr?
     output << '<script type="text/javascript">'
-    output << %{Event.observe(window, 'load', function() \{}
+    output << %{Event.observe(window, 'load', function() \{} unless request.xhr?
     output << editor_buttons.join("\n") if editor_buttons.any?;
     editor_ids.each do |editor_id, mode|
       output << "TextileEditor.initialize('%s', '%s');" % [editor_id, mode || 'extended']
     end
-    output << '});'
+    output << '});' unless request.xhr?
     output << '</script>'
     output.join("\n")
   end
