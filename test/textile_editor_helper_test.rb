@@ -39,12 +39,22 @@ class TextileEditorHelperTest < Test::Unit::TestCase
     output = textile_editor(object, field, options)
     assert_equal  text_area(object, field, options), output
   end  
+
+  def framework_initialize_output(framework)
+    case framework
+    when :prototype
+      %{Event.observe(window, 'load', function() \{}
+    when :jquery
+      %{$(function() \{}
+    end
+  end
   
-  def pre_initialize_output
+  def pre_initialize_output(framework)
     %{<link href="/stylesheets/textile-editor.css" media="screen" rel="stylesheet" type="text/css" />
       <script src="/javascripts/textile-editor.js" type="text/javascript"></script>
       <script type="text/javascript">
-      Event.observe(window, 'load', function() \{}
+      } +
+      framework_initialize_output(framework)
   end
   
   def post_initialize_output
@@ -53,8 +63,8 @@ class TextileEditorHelperTest < Test::Unit::TestCase
     }
   end
   
-  def expected_initialize_output(editors, button_data=nil)
-    expected = [pre_initialize_output]
+  def expected_initialize_output(framework, editors, button_data=nil)
+    expected = [pre_initialize_output(framework)]
     expected << button_data unless button_data.nil?
     expected << editors.map do |editor|
       "TextileEditor.initialize('%s', '%s');" % editor
@@ -91,13 +101,27 @@ class TextileEditorHelperTest < Test::Unit::TestCase
   def test_textile_editor_initialize
     create_extended_editor('article', 'body')
     output = textile_editor_initialize()
-    assert_equal expected_initialize_output([
+    assert_equal expected_initialize_output(:prototype, [
       ['article_body', 'extended']
     ]), output
     
     create_simple_editor('article', 'body_excerpt')
     output = textile_editor_initialize()
-    assert_equal expected_initialize_output([
+    assert_equal expected_initialize_output(:prototype, [
+      ['article_body', 'extended'],
+      ['article_body_excerpt', 'simple']
+    ]), output
+
+    output = textile_editor_initialize(:framework => :jquery)
+    assert_equal expected_initialize_output(:jquery, [
+      ['article_body', 'extended'],
+      ['article_body_excerpt', 'simple']
+    ]), output
+    
+    # test using custom default options
+    textile_editor_options :framework => :jquery
+    output = textile_editor_initialize()
+    assert_equal expected_initialize_output(:jquery, [
       ['article_body', 'extended'],
       ['article_body_excerpt', 'simple']
     ]), output
@@ -105,7 +129,7 @@ class TextileEditorHelperTest < Test::Unit::TestCase
   
   def test_textile_editor_inititalize_with_arbitrary_ids
     output = textile_editor_initialize(:story_comment, :story_body)
-    assert_equal expected_initialize_output([
+    assert_equal expected_initialize_output(:prototype, [
       ['story_comment', 'extended'],
       ['story_body', 'extended']
     ]), output
@@ -124,7 +148,7 @@ class TextileEditorHelperTest < Test::Unit::TestCase
      
     create_extended_editor('article', 'body')
     output = textile_editor_initialize()
-    assert_equal expected_initialize_output([
+    assert_equal expected_initialize_output(:prototype, [
       ['article_body', 'extended']
     ], button_data), output
   end

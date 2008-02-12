@@ -45,6 +45,7 @@ function TextileEditorButton(id, display, tagStart, tagEnd, access, title, sve, 
 	this.sve = sve;				// sve = simple vs. extended. add an 's' to make it show up in the simple toolbar
 	this.open = open;			// set to -1 if tag does not need to be closed
 	this.standard = true;  // this is a standard button
+	// this.framework = 'prototype'; // the JS framework used
 }
 
 function TextileEditorButtonSeparator(sve) {
@@ -89,7 +90,9 @@ TextileEditor.Methods = {
 		} // end for
 		
 		var te = this;
-		$A(toolbar.getElementsByTagName('button')).each(function(button) {
+		var buttons = toolbar.getElementsByTagName('button');
+		for(var i = 0; i < button.length; i++) {
+		//$A(toolbar.getElementsByTagName('button')).each(function(button) {
 			if (!button.onclick) {
 				button.onclick = function() { te.insertTag(button); return false; }
 			} // end if
@@ -99,7 +102,8 @@ TextileEditor.Methods = {
 			button.open = button.getAttribute('open');
 			button.textile_editor = te;
 			button.canvas = te.canvas;
-		});
+		//});
+	  }
 	}, // end initialize
 	
 	// draw individual buttons (edShowButton)

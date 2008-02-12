@@ -15,6 +15,10 @@ module TextileEditorHelper
     output.join("\n")
   end
   
+  def textile_editor_options(options={})
+    (@textile_editor_options ||= { :framework => :prototype }).merge! options
+  end
+  
   # adds the necessary javascript include tags, stylesheet tags,
   # and load event with necessary javascript to active textile editor(s)
   # sample output:
@@ -36,12 +40,31 @@ module TextileEditorHelper
   # This means that the support files must be loaded outside of the AJAX request, either
   # via a call to this helper or the textile_editor_support() helper
   def textile_editor_initialize(*dom_ids)
+    options = textile_editor_options.dup
+    
+    # extract options from last argument if it's a hash
+    if dom_ids.last.is_a?(Hash)
+      hash = dom_ids.last.dup
+      options.merge! hash
+      dom_ids.last.delete :framework
+    end
+    
     editor_ids = (@textile_editor_ids || []) + textile_extract_dom_ids(*dom_ids)
     editor_buttons = (@textile_editor_buttons || [])
     output = []
     output << textile_editor_support unless request.xhr?
     output << '<script type="text/javascript">'
-    output << %{Event.observe(window, 'load', function() \{} unless request.xhr?
+    
+    if !request.xhr?
+      case options[:framework]
+      when :prototype
+        output << %{Event.observe(window, 'load', function() \{}
+      when :jquery
+        output << %{$(function() \{}
+      end
+    end      
+    
+    # output << %q{TextileEditor.framework = '%s';} % options[:framework].to_s
     output << editor_buttons.join("\n") if editor_buttons.any?
     editor_ids.each do |editor_id, mode|
       output << %q{TextileEditor.initialize('%s', '%s');} % [editor_id, mode || 'extended']
