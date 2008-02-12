@@ -41,10 +41,10 @@ module TextileEditorHelper
     output = []
     output << textile_editor_support unless request.xhr?
     output << '<script type="text/javascript">'
-    output << %{Event.observe(window, "load", function() \{} unless request.xhr?
+    output << %{Event.observe(window, 'load', function() \{} unless request.xhr?
     output << editor_buttons.join("\n") if editor_buttons.any?
     editor_ids.each do |editor_id, mode|
-      output << %q{TextileEditor.initialize("%s", "%s");} % [editor_id, mode || 'extended']
+      output << %q{TextileEditor.initialize('%s', '%s');} % [editor_id, mode || 'extended']
     end
     output << '});' unless request.xhr?
     output << '</script>'

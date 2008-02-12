@@ -41,7 +41,7 @@ class TextileEditorHelperTest < Test::Unit::TestCase
   end  
   
   def pre_initialize_output
-    %{<link href="/stylesheets/textile-editor.css" media="screen" rel="Stylesheet" type="text/css" />
+    %{<link href="/stylesheets/textile-editor.css" media="screen" rel="stylesheet" type="text/css" />
       <script src="/javascripts/textile-editor.js" type="text/javascript"></script>
       <script type="text/javascript">
       Event.observe(window, 'load', function() \{}
