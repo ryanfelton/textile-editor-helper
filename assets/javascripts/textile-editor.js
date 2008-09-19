@@ -179,7 +179,7 @@ TextileEditor.Methods = {
 	// insert the tag. this is the bulk of the code.
 	// (edInsertTag)
   insertTag: function(button, tagStart, tagEnd) {
-    console.log(button);
+    // console.log(button);
 	  var myField = button.canvas;
 		myField.focus();
 
