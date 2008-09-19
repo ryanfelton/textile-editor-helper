@@ -1,4 +1,8 @@
-= Textile Editor Helper v0.2
+= Textile Editor Helper v0.3
+
+Textile Editor Helper is a plugin for Ruby on Rails to add a Textile toolbar above textareas
+	
+This version of Textile Editor Helper is a fork of the code found at http://svn.webtest.wvu.edu/repos/rails/plugins/textile_editor_helper/ to allow for use with the form_for method. 
 
 == Dependency
 
@@ -12,7 +16,21 @@ Directions to get the helper up and running for your install:
 	1. run rake textile_editor_helper:install
 	2. for the textarea(s) that you want to add the TEH toolbar to replace the text area tag with:
 
-		<%= textile_editor 'object', 'field' -%> **just like writing a text area tag, same options**
+		<% form_for(:user, :url => user_path(@user), :html => { :method => :put }) do |f| %>
+	  	<%= f.textile_editor :description %>
+    <% end %>
+
+		**OR**
+		
+		<%= form_tag :controller => "users", :action => "edit", :id => @user.id %>
+			<%= textile_editor :user, "website" %>
+		</form>
+		
+		**OR** 
+		
+		<%= textile_editor_tag 'description', :description -%> 
+		
+		**just like writing a text area tag, same options**
 
 	3. at the end of your form put in the following code:
 

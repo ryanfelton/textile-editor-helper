@@ -8,7 +8,7 @@ class TextileEditorHelperTest < Test::Unit::TestCase
   include ActionView::Helpers::TagHelper
   include ActionView::Helpers::FormHelper
   include ActionView::Helpers::JavascriptHelper
-  include TextileEditorHelper
+  # include TextileEditorHelper
     
   def setup
     @controller = Class.new do
