@@ -266,6 +266,15 @@ TextileEditor.Methods = {
         newlineEndPos = 1;
       }
 
+      // remove space from the end of the selectedText.
+      // Fixes a bug that causes any browser running under Microsoft Internet Explorer 
+      // to append an additional space before the closing element.
+      // *Bold text *here => *Bold text*
+      if (selectedText.match(/\s$/g)) {
+        selectedText = selectedText.replace(/\s$/g,'');
+        followupText = ' ';
+      }
+      
       // no clue, i'm sure it made sense at the time i wrote it
       if (followupText.match(/^\n/)) {
         newlineFollowup = '';
