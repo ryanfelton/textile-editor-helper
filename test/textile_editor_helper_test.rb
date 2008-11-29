@@ -7,7 +7,7 @@ class TextileEditorHelperTest < Test::Unit::TestCase
   include ActionView::Helpers::AssetTagHelper
   include ActionView::Helpers::TagHelper
   include ActionView::Helpers::FormHelper
-  include ActionView::Helpers::JavascriptHelper
+  include ActionView::Helpers::JavaScriptHelper
   # include TextileEditorHelper
     
   def setup

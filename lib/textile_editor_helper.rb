@@ -40,7 +40,7 @@ module ActionView
         mode      = options.delete(:simple) ? 'simple' : 'extended'
         (@textile_editor_ids ||= []) << [editor_id.to_s, mode.to_s]
 
-        InstanceTag.new(object_name, method, self, nil, options.delete(:object)).to_text_area_tag(options)
+        InstanceTag.new(object_name, method, self, options.delete(:object)).to_text_area_tag(options)
       end
       
       def textile_editor_options(options={})
