@@ -91,7 +91,7 @@ module ActionView
       #    <link href="/stylesheets/textile-editor.css" media="screen" rel="Stylesheet" type="text/css" />
       #    <script src="/javascripts/textile-editor.js" type="text/javascript"></script>
       #    <script type="text/javascript">
-      #    Event.observe(window, 'load', function() {
+      #    document.observe('dom:loaded', function() {
       #    TextileEditor.initialize('article_body', 'extended');
       #    TextileEditor.initialize('article_body_excerpt', 'simple');
       #    });
@@ -124,9 +124,9 @@ module ActionView
         if !request.xhr?
           case options[:framework]
           when :prototype
-            output << %{Event.observe(window, 'load', function() \{}
+            output << %{document.observe('dom:loaded', function() \{}
           when :jquery
-            output << %{$(function() \{}
+            output << %{$(document).ready(function() \{}
           end
         end      
 
