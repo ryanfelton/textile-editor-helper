@@ -43,9 +43,9 @@ class TextileEditorHelperTest < Test::Unit::TestCase
   def framework_initialize_output(framework)
     case framework
     when :prototype
-      %{Event.observe(window, 'load', function() \{}
+      %{document.observe('dom:loaded', function() \{}
     when :jquery
-      %{$(function() \{}
+      %{$(document).ready(function() \{}
     end
   end
   
