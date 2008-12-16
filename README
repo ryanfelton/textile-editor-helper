@@ -6,7 +6,7 @@ This version of Textile Editor Helper is a fork of the code found at http://svn.
 
 == Dependency
 
-To use Textile Editor Helper you must be using Prototype. TEH relies on Prototype for the onload event handler.
+To use Textile Editor Helper you must be using either the Prototype or jQuery JavaScript libraries. If using Prototype, the Textile Editor Helper starts up on the 'dom:loaded' custom event. If using jQuery, it uses the $(document).ready() method.
 
 
 == To use Textile Editor Helper
