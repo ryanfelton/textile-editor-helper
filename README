@@ -35,6 +35,8 @@ Directions to get the helper up and running for your install:
 	3. at the end of your form put in the following code:
 
 		<%= textile_editor_initialize -%> **Important!**
+		
+		If using jQuery, do textile_editor_initialize(:framework => :jquery)
 
 	4. save your view and check it out
 
