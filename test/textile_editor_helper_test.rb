@@ -53,12 +53,14 @@ class TextileEditorHelperTest < Test::Unit::TestCase
     %{<link href="/stylesheets/textile-editor.css" media="screen" rel="stylesheet" type="text/css" />
       <script src="/javascripts/textile-editor.js" type="text/javascript"></script>
       <script type="text/javascript">
+      /* <![CDATA[ */
       } +
       framework_initialize_output(framework)
   end
   
   def post_initialize_output
     %{\});
+      /* ]]> */
       </script>
     }
   end

@@ -120,7 +120,8 @@ module ActionView
         output = []
         output << textile_editor_support unless request.xhr?
         output << '<script type="text/javascript">'
-
+        output << '/* <![CDATA[ */'
+        
         if !request.xhr?
           case options[:framework]
           when :prototype
@@ -136,6 +137,8 @@ module ActionView
           output << %q{TextileEditor.initialize('%s', '%s');} % [editor_id, mode || 'extended']
         end
         output << '});' unless request.xhr?
+
+        output << '/* ]]> */'
         output << '</script>'
         output.join("\n")
       end
