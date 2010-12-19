@@ -127,7 +127,7 @@ module ActionView
           when :prototype
             output << %{document.observe('dom:loaded', function() \{}
           when :jquery
-            output << %{$(document).ready(function() \{}
+            output << %{jQuery(document).ready(function($) \{}
           end
         end      
 
