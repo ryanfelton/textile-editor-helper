@@ -1,5 +1,5 @@
 namespace :textile_editor_helper do
-  PLUGIN_ROOT = File.dirname(__FILE__) + '/..'
+  PLUGIN_ROOT = File.dirname(__FILE__) + '/../..'
   ASSET_FILES = Dir[PLUGIN_ROOT + '/assets/**/*'].select { |e| File.file?(e) }
   
   desc 'Installs required assets'
@@ -10,10 +10,10 @@ namespace :textile_editor_helper do
     verbose = true
     ASSET_FILES.each do |file|
       path = File.dirname(file) + '/'
-      path.gsub!(PLUGIN_ROOT, RAILS_ROOT)
+      path.gsub!(PLUGIN_ROOT, ::Rails.root.to_s)
       path.gsub!('assets', 'public')
       destination = File.join(path, File.basename(file))
-      puts " * Copying %-50s to %s" % [file.gsub(PLUGIN_ROOT, ''), destination.gsub(RAILS_ROOT, '')] if verbose
+      puts " * Copying %-50s to %s" % [file.gsub(PLUGIN_ROOT, ''), destination.gsub(::Rails.root.to_s, '')] if verbose
       FileUtils.mkpath(path) unless File.directory?(path)
       
       #puts File.mtime(file), File.mtime(destination)
@@ -27,10 +27,10 @@ namespace :textile_editor_helper do
   task :remove do
     ASSET_FILES.each do |file|
       path = File.dirname(file) + '/'
-      path.gsub!(PLUGIN_ROOT, RAILS_ROOT)
+      path.gsub!(PLUGIN_ROOT, ::Rails.root.to_s)
       path.gsub!('assets', 'public')
       path = File.join(path, File.basename(file))
-      puts ' * Removing %s' % path.gsub(RAILS_ROOT, '') if verbose
+      puts ' * Removing %s' % path.gsub(::Rails.root.to_s, '') if verbose
       FileUtils.rm [path]
     end
   end
