@@ -1,11 +1,3 @@
-Important Information
----------------------
-
-I'm **maintaining** this plugin. Ryan's, the original author, last commit was over a year ago and no Rails3 support was added. That's why I decided to maintain this.
-
-Any help is really appreciated.
-
-
 Textile Editor Helper v0.3
 ==========================
 
