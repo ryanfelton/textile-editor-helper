@@ -8,6 +8,8 @@ require 'action_controller'
 require 'action_controller/cgi_ext'
 require 'action_controller/test_process'
 
+$KCODE = 'UTF8'
+
 # Show backtraces for deprecated behavior for quicker cleanup.
 ActiveSupport::Deprecation.debug = true
 
